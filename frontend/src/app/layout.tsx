@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     "free youtube downloader",
     "TubeForge",
   ],
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     title: "TubeForge — Download YouTube Videos Instantly",
     description:

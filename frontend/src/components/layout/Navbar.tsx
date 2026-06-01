@@ -44,7 +44,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-600 shadow-lg shadow-brand-500/25">
-              <Download className="h-5 w-5 text-white" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-white">
+                <path d="M8 12l4 4 4-4" />
+                <path d="M12 4v12" />
+                <path d="M4 18v1a2 2 0 002 2h12a2 2 0 002-2v-1" />
+              </svg>
             </div>
             <span className="text-lg font-bold tracking-tight text-surface-100">
               {APP_NAME}
