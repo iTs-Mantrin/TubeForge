@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apk add --no-cache ffmpeg python3 py3-pip && \
     pip3 install --break-system-packages yt-dlp
 
-COPY package.json tsconfig.json tsconfig.build.json nest-cli.json ./
+COPY . .
 RUN npm ci
 
 COPY src/ ./src/
