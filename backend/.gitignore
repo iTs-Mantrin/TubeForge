@@ -1,0 +1,74 @@
+# --- Dependencies ---
+node_modules/
+.pnp
+.pnp.js
+
+# --- Build output ---
+dist/
+build/
+
+# --- Environment files ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# --- Runtime / Temp ---
+.tmp/
+temp/
+tmp/
+*.tsbuildinfo
+*.swp
+*.swo
+
+# --- Project-specific: download artifacts ---
+# yt-dlp downloads and FFmpeg output (configurable via DOWNLOAD_DIR)
+/downloads/
+/yt-downloads/
+
+# --- IDE & Editor ---
+.vscode/settings.json
+.idea/
+*.iml
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+*.dylib
+ehthumbs.db
+*.lnk
+
+# --- Testing ---
+coverage/
+.nyc_output/
+*.lcov
+
+# --- Docker ---
+# ignore .env used by docker-compose (handled above)
+
+# --- Debug ---
+# TypeScript debug files
+# NestJS debug port files
+
+# --- Misc ---
+.eslintcache
+.cache/
