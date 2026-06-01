@@ -56,4 +56,4 @@ coverage/
 .eslintcache
 .cache/
 *.tsbuildinfo
-*.sisyphus
+.sisyphus/
