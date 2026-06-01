@@ -46,7 +46,7 @@ export default function QualitySelector({
             'flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
             downloadType === 'video'
               ? 'bg-gradient-to-r from-brand-600 to-accent-600 text-white shadow-lg shadow-brand-500/20'
-              : 'text-surface-400 hover:text-white'
+              : 'text-surface-400 hover:text-surface-100'
           )}
         >
           <Film className="h-4 w-4" />
@@ -58,7 +58,7 @@ export default function QualitySelector({
             'flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
             downloadType === 'audio'
               ? 'bg-gradient-to-r from-brand-600 to-accent-600 text-white shadow-lg shadow-brand-500/20'
-              : 'text-surface-400 hover:text-white'
+              : 'text-surface-400 hover:text-surface-100'
           )}
         >
           <Music className="h-4 w-4" />
@@ -84,8 +84,8 @@ export default function QualitySelector({
                   className={cn(
                     'relative flex flex-col items-center gap-1 px-3 py-3 rounded-xl text-sm transition-all duration-200',
                     isSelected
-                      ? 'bg-brand-600/20 ring-2 ring-brand-500 text-white'
-                      : 'bg-surface-800/50 ring-1 ring-white/5 text-surface-400 hover:ring-white/10 hover:text-white',
+                      ? 'bg-brand-600/20 ring-2 ring-brand-500 text-surface-100'
+                      : 'bg-surface-800/50 ring-1 ring-(--border-subtle) text-surface-400 hover:ring-(--border-subtle) hover:text-surface-100',
                     disabled && 'opacity-50 cursor-not-allowed'
                   )}
                 >
@@ -116,7 +116,7 @@ export default function QualitySelector({
             ].map((opt) => (
               <div
                 key={opt.value}
-                className="flex-1 flex flex-col items-center gap-1 px-4 py-3 rounded-xl bg-brand-600/20 ring-2 ring-brand-500 text-white"
+                className="flex-1 flex flex-col items-center gap-1 px-4 py-3 rounded-xl bg-brand-600/20 ring-2 ring-brand-500 text-surface-100"
               >
                 <span className="text-xs font-semibold">{opt.label}</span>
                 <span className="text-[10px] text-surface-400">{opt.desc}</span>

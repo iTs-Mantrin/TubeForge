@@ -85,7 +85,7 @@ export default function Hero() {
             variants={itemVariants}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
           >
-            <span className="text-white">Download YouTube</span>
+            <span className="text-surface-100">Download <span className="text-red-500">YouTube</span></span>
             <br />
             <span className="gradient-text">Videos Instantly</span>
           </motion.h1>

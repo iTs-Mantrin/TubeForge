@@ -79,7 +79,7 @@ export default function DownloadPage() {
         <main className="flex-1 flex items-center justify-center p-4">
           <div className="text-center max-w-md">
             <AlertTriangle className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-            <h1 className="text-xl font-bold text-white mb-2">Invalid URL</h1>
+            <h1 className="text-xl font-bold text-surface-100 mb-2">Invalid URL</h1>
             <p className="text-surface-400 text-sm mb-6">
               The YouTube URL you provided is not valid. Please check and try again.
             </p>
@@ -111,7 +111,7 @@ export default function DownloadPage() {
           >
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-sm text-surface-400 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-surface-400 hover:text-surface-100 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to {APP_NAME}
@@ -126,7 +126,7 @@ export default function DownloadPage() {
               className="glass rounded-2xl p-8 text-center max-w-lg mx-auto"
             >
               <AlertTriangle className="h-10 w-10 text-red-400 mx-auto mb-4" />
-              <h2 className="text-lg font-semibold text-white mb-2">
+              <h2 className="text-lg font-semibold text-surface-100 mb-2">
                 Could not load video
               </h2>
               <p className="text-sm text-surface-400 mb-6">

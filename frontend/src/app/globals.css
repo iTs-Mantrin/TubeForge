@@ -39,7 +39,7 @@
   --color-surface-900: #0f172a;
   --color-surface-950: #020617;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -61,6 +61,59 @@
     0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.1); }
     100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.3); }
   }
+}
+
+/* ============================================================
+   Theme Modes (Light / Dark)
+   Tailwind v4 generates --color-* variables from @theme.
+   We override them here so existing classes auto-adapt.
+   ============================================================ */
+:root {
+  /* Light mode — warm surface palette (cream/warm-gray based) */
+  --color-surface-50: #faf8f5;
+  --color-surface-100: #1c1814;
+  --color-surface-200: #2d2823;
+  --color-surface-300: #423c36;
+  --color-surface-400: #5c5650;
+  --color-surface-500: #7d7670;
+  --color-surface-600: #9d9791;
+  --color-surface-700: #bcb6b0;
+  --color-surface-800: #d6d0ca;
+  --color-surface-850: #e8e3dd;
+  --color-surface-900: #f2eee9;
+  --color-surface-950: #faf8f5;
+
+  /* Theme-aware utility variables */
+  --bg-hover: rgba(0, 0, 0, 0.05);
+  --bg-active: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-active: rgba(0, 0, 0, 0.1);
+  --ring-white: rgba(0, 0, 0, 0.06);
+  --divide-subtle: rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  /* Dark mode — warm dark palette (warm charcoal/cream-based) */
+  --color-surface-50: #faf8f5;
+  --color-surface-100: #f5f0ea;
+  --color-surface-200: #e5e0d9;
+  --color-surface-300: #c8c2bb;
+  --color-surface-400: #a09992;
+  --color-surface-500: #817a73;
+  --color-surface-600: #635c55;
+  --color-surface-700: #453f39;
+  --color-surface-800: #2d2823;
+  --color-surface-850: #1e1a16;
+  --color-surface-900: #14100d;
+  --color-surface-950: #0d0b0a;
+
+  /* Theme-aware utility variables */
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-active: rgba(255, 255, 255, 0.1);
+  --ring-white: rgba(255, 255, 255, 0.06);
+  --divide-subtle: rgba(255, 255, 255, 0.06);
 }
 
 /* ============================================================
@@ -94,24 +147,36 @@
    Glassmorphism Utility
    ============================================================ */
 @utility glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
 }
 
 @utility glass-hover {
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--glass-hover-bg);
+    border-color: var(--border-active);
   }
 }
 
 @utility glass-strong {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--glass-strong-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+}
+
+:root {
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-hover-bg: rgba(0, 0, 0, 0.06);
+  --glass-strong-bg: rgba(255, 255, 255, 0.85);
+}
+
+.dark {
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-hover-bg: rgba(255, 255, 255, 0.06);
+  --glass-strong-bg: rgba(20, 16, 13, 0.8);
 }
 
 /* ============================================================
@@ -137,11 +202,53 @@
 @utility skeleton {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.04) 75%
+    var(--skeleton-from) 25%,
+    var(--skeleton-via) 50%,
+    var(--skeleton-to) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 2s linear infinite;
   border-radius: 0.5rem;
+}
+
+:root {
+  --skeleton-from: rgba(0, 0, 0, 0.04);
+  --skeleton-via: rgba(0, 0, 0, 0.08);
+  --skeleton-to: rgba(0, 0, 0, 0.04);
+}
+
+.dark {
+  --skeleton-from: rgba(255, 255, 255, 0.04);
+  --skeleton-via: rgba(255, 255, 255, 0.08);
+  --skeleton-to: rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================================
+   Theme Transition
+   ============================================================ */
+html {
+  transition: color-scheme 0.3s ease;
+}
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================================
+   Navbar Glass
+   Light-mode navbar background when scrolled
+   ============================================================ */
+@utility navbar-glass {
+  background: var(--navbar-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+:root {
+  --navbar-bg: rgba(250, 248, 245, 0.85);
+}
+
+.dark {
+  --navbar-bg: rgba(13, 11, 10, 0.85);
 }

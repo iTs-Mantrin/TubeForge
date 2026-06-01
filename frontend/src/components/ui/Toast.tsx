@@ -64,14 +64,14 @@ export default function ToastContainer() {
                 <Icon className={cn('h-4 w-4', colors.icon)} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white">{toast.title}</p>
+                <p className="text-sm font-medium text-surface-100">{toast.title}</p>
                 {toast.message && (
                   <p className="text-xs text-surface-400 mt-0.5">{toast.message}</p>
                 )}
               </div>
               <button
                 onClick={() => removeToast(toast.id)}
-                className="flex-shrink-0 p-1 rounded-lg text-surface-500 hover:text-white hover:bg-white/5 transition-colors"
+                className="flex-shrink-0 p-1 rounded-lg text-surface-500 hover:text-surface-100 hover:bg-white/5 transition-colors"
               >
                 <X className="h-3.5 w-3.5" />
               </button>

@@ -29,7 +29,7 @@ function FAQItem({
         onClick={onToggle}
         className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
       >
-        <span className="text-sm font-medium text-white group-hover:text-brand-300 transition-colors">
+        <span className="text-sm font-medium text-surface-100 group-hover:text-brand-300 transition-colors">
           {question}
         </span>
         <ChevronDown
@@ -85,7 +85,7 @@ export default function FAQ() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-surface-100 mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-surface-400 text-lg max-w-xl mx-auto">
@@ -110,7 +110,7 @@ export default function FAQ() {
               setOpenIndex(null);
             }}
             placeholder="Search questions..."
-            className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
           />
         </motion.div>
 

@@ -22,7 +22,7 @@ export default function SupportedPlatforms() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-surface-100 mb-4">
             Supported Platforms
           </h2>
           <p className="text-surface-400 text-lg max-w-xl mx-auto">
@@ -47,10 +47,10 @@ export default function SupportedPlatforms() {
                   'glass glass-hover'
                 )}
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500/10 to-accent-500/10 ring-1 ring-white/5">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500/10 to-accent-500/10 ring-1 ring-(--border-subtle)">
                   <Icon className="h-6 w-6 text-brand-400" />
                 </div>
-                <span className="text-sm font-medium text-white">
+                <span className="text-sm font-medium text-surface-100">
                   {platform.name}
                 </span>
                 {platform.supported && (

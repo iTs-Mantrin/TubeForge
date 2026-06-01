@@ -1,0 +1,178 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link "TubeForge" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e10]: TubeForge
+        - generic [ref=e11]:
+          - link "Home" [ref=e12] [cursor=pointer]:
+            - /url: /
+            - img [ref=e13]
+            - text: Home
+          - link "History" [ref=e17] [cursor=pointer]:
+            - /url: /history
+            - img [ref=e18]
+            - text: History
+          - link "Contact" [ref=e22] [cursor=pointer]:
+            - /url: /contact
+            - img [ref=e23]
+            - text: Contact
+        - button "Toggle theme" [active] [ref=e257]:
+          - img [ref=e265]
+  - main [ref=e26]:
+    - generic [ref=e34]:
+      - generic [ref=e36]:
+        - img [ref=e37]
+        - generic [ref=e40]: Free & Unlimited Downloads
+      - heading "Download YouTube Videos Instantly" [level=1] [ref=e41]:
+        - text: Download YouTube
+        - text: Videos Instantly
+      - paragraph [ref=e42]: TubeForge lets you download YouTube videos and audio in any quality — 360p to 4K, MP4 or MP3. No limits, no sign-up needed.
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e48]
+          - textbox "Paste YouTube link here..." [ref=e50]
+          - generic [ref=e51]:
+            - button "Paste" [ref=e52]:
+              - img [ref=e53]
+              - text: Paste
+            - button "Search" [disabled] [ref=e56]:
+              - img [ref=e57]
+              - text: Search
+        - generic [ref=e60]: Please enter a valid YouTube URL (youtube.com, youtu.be)
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - img [ref=e63]
+          - text: No sign-up required
+        - generic [ref=e65]:
+          - img [ref=e66]
+          - text: Unlimited downloads
+        - generic [ref=e69]: 4K · 1080p · 720p · MP3
+      - img [ref=e71]
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - heading "Everything you need" [level=2] [ref=e77]
+        - paragraph [ref=e78]: Powerful features designed for the best download experience.
+      - generic [ref=e79]:
+        - generic [ref=e81]:
+          - img [ref=e83]
+          - heading "Any Quality" [level=3] [ref=e86]
+          - paragraph [ref=e87]: From 360p to 4K — pick the resolution that works for you.
+        - generic [ref=e89]:
+          - img [ref=e91]
+          - heading "Audio Only" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Extract MP3 audio at 192kbps. Perfect for music & podcasts.
+        - generic [ref=e98]:
+          - img [ref=e100]
+          - heading "Blazing Fast" [level=3] [ref=e102]
+          - paragraph [ref=e103]: Powered by async queue processing — no waiting, no throttling.
+        - generic [ref=e105]:
+          - img [ref=e107]
+          - heading "No Limits" [level=3] [ref=e109]
+          - paragraph [ref=e110]: Download videos of any length and size. No daily caps.
+        - generic [ref=e112]:
+          - img [ref=e114]
+          - heading "Real-Time Progress" [level=3] [ref=e116]
+          - paragraph [ref=e117]: Watch your download progress live via WebSocket updates.
+        - generic [ref=e119]:
+          - img [ref=e121]
+          - heading "Cloud Storage" [level=3] [ref=e123]
+          - paragraph [ref=e124]: Files stored reliably on Cloudflare R2 with CDN delivery.
+    - generic [ref=e126]:
+      - generic [ref=e127]:
+        - heading "Supported Platforms" [level=2] [ref=e128]
+        - paragraph [ref=e129]: One tool for all your YouTube content.
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - img [ref=e133]
+          - generic [ref=e135]: YouTube
+          - generic [ref=e136]: Supported
+        - generic [ref=e137]:
+          - img [ref=e139]
+          - generic [ref=e141]: YouTube Shorts
+          - generic [ref=e142]: Supported
+        - generic [ref=e143]:
+          - img [ref=e145]
+          - generic [ref=e149]: YouTube Music
+          - generic [ref=e150]: Supported
+    - generic [ref=e153]:
+      - generic [ref=e154]:
+        - heading "Frequently Asked Questions" [level=2] [ref=e155]
+        - paragraph [ref=e156]: Everything you need to know about TubeForge.
+      - generic [ref=e157]:
+        - img [ref=e158]
+        - textbox "Search questions..." [ref=e161]
+      - generic [ref=e162]:
+        - button "What is TubeForge?" [ref=e164]:
+          - generic [ref=e165]: What is TubeForge?
+          - img [ref=e166]
+        - button "Is TubeForge free to use?" [ref=e169]:
+          - generic [ref=e170]: Is TubeForge free to use?
+          - img [ref=e171]
+        - button "What formats are supported?" [ref=e174]:
+          - generic [ref=e175]: What formats are supported?
+          - img [ref=e176]
+        - button "How long does a download take?" [ref=e179]:
+          - generic [ref=e180]: How long does a download take?
+          - img [ref=e181]
+        - button "Can I download YouTube Shorts?" [ref=e184]:
+          - generic [ref=e185]: Can I download YouTube Shorts?
+          - img [ref=e186]
+        - button "Is there a file size or duration limit?" [ref=e189]:
+          - generic [ref=e190]: Is there a file size or duration limit?
+          - img [ref=e191]
+        - button "How do I download audio only?" [ref=e194]:
+          - generic [ref=e195]: How do I download audio only?
+          - img [ref=e196]
+        - button "Where are my downloads stored?" [ref=e199]:
+          - generic [ref=e200]: Where are my downloads stored?
+          - img [ref=e201]
+  - contentinfo [ref=e203]:
+    - generic [ref=e204]:
+      - generic [ref=e205]:
+        - generic [ref=e206]:
+          - link "TubeForge" [ref=e207] [cursor=pointer]:
+            - /url: /
+            - img [ref=e209]
+            - generic [ref=e212]: TubeForge
+          - paragraph [ref=e213]: Download YouTube videos and audio instantly. No limits, no sign-up, completely free.
+          - generic [ref=e214]:
+            - link "Website" [ref=e215] [cursor=pointer]:
+              - /url: https://TubeForge.in
+              - img [ref=e216]
+            - link "Email" [ref=e219] [cursor=pointer]:
+              - /url: mailto:manish.kumar@modifyly.in
+              - img [ref=e220]
+            - link "RSS" [ref=e222] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e223]
+        - generic [ref=e227]:
+          - heading "Quick Links" [level=3] [ref=e228]
+          - list [ref=e229]:
+            - listitem [ref=e230]:
+              - link "Home" [ref=e231] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e232]:
+              - link "History" [ref=e233] [cursor=pointer]:
+                - /url: /history
+            - listitem [ref=e234]:
+              - link "FAQ" [ref=e235] [cursor=pointer]:
+                - /url: /#faq
+        - generic [ref=e236]:
+          - heading "Support" [level=3] [ref=e237]
+          - list [ref=e238]:
+            - listitem [ref=e239]:
+              - link "Contact" [ref=e240] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e241]:
+              - link "Terms of Service" [ref=e242] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e243]:
+              - link "Privacy Policy" [ref=e244] [cursor=pointer]:
+                - /url: /privacy
+      - paragraph [ref=e246]: © 2026 TubeForge. All rights reserved. — Not affiliated with YouTube or Google.
+  - button "Open Next.js Dev Tools" [ref=e252] [cursor=pointer]:
+    - img [ref=e253]
+  - alert [ref=e264]

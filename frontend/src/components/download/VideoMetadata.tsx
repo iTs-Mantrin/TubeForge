@@ -44,7 +44,7 @@ export default function VideoMetadata({ metadata }: VideoMetadataProps) {
         {/* Details */}
         <div className="md:col-span-3 p-6 flex flex-col justify-center gap-4">
           {/* Title */}
-          <h1 className="text-lg sm:text-xl font-bold text-white leading-snug line-clamp-2">
+          <h1 className="text-lg sm:text-xl font-bold text-surface-100 leading-snug line-clamp-2">
             {metadata.title}
           </h1>
 

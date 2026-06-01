@@ -101,7 +101,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
             placeholder="Paste YouTube link here..."
-            className="flex-1 bg-transparent text-base text-white placeholder-surface-500 outline-none border-none min-w-0"
+            className="flex-1 bg-transparent text-base text-surface-100 placeholder-surface-500 outline-none border-none min-w-0"
             disabled={isLoading}
             autoComplete="off"
             spellCheck={false}
@@ -113,7 +113,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
               <button
                 type="button"
                 onClick={handleClear}
-                className="flex items-center justify-center p-1.5 rounded-lg text-surface-400 hover:text-white hover:bg-white/5 transition-colors"
+                className="flex items-center justify-center p-1.5 rounded-lg text-surface-400 hover:text-surface-100 hover:bg-white/5 transition-colors"
                 aria-label="Clear input"
               >
                 <X className="h-4 w-4" />
@@ -124,7 +124,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
               <button
                 type="button"
                 onClick={handlePaste}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-brand-300 hover:text-white hover:bg-brand-500/10 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-brand-300 hover:text-surface-100 hover:bg-brand-500/10 transition-colors"
               >
                 <LinkIcon className="h-3.5 w-3.5" />
                 Paste

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Sora } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
-const inter = Inter({
-  variable: "--font-inter",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
   display: "swap",
 });
@@ -49,9 +50,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
+    <html lang="en" className={`${sora.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-surface-950 text-surface-100 antialiased">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

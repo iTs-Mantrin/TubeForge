@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, MessageSquare, Clock, Send } from 'lucide-react';
+import { MessageSquare, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -27,7 +27,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:manish.kumar@TubeForge.in?subject=${encodeURIComponent(
+    const mailtoLink = `mailto:manish.kumar@modifyly.in?subject=${encodeURIComponent(
       `[Contact Form] ${formData.subject}`
     )}&body=${encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
@@ -48,7 +48,7 @@ export default function ContactPage() {
             transition={{ duration: 0.4 }}
             className="text-center mb-12"
           >
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-surface-100 mb-4">
               Contact Us
             </h1>
             <p className="text-surface-400 text-lg max-w-xl mx-auto">
@@ -68,36 +68,17 @@ export default function ContactPage() {
                 variants={fadeUp}
                 className="glass rounded-2xl p-6"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 mb-4">
-                  <Mail className="h-5 w-5" />
-                </div>
-                <h3 className="text-sm font-semibold text-white mb-1">Email</h3>
-                <a
-                  href="mailto:manish.kumar@TubeForge.in"
-                  className="text-sm text-brand-400 hover:text-brand-300 transition-colors break-all"
-                >
-                  manish.kumar@TubeForge.in
-                </a>
-                <p className="text-xs text-surface-500 mt-2">
-                  Send us an email anytime. We typically respond within 24 hours.
-                </p>
-              </motion.div>
-
-              <motion.div
-                variants={fadeUp}
-                className="glass rounded-2xl p-6"
-              >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-500/10 text-accent-400 mb-4">
                   <MessageSquare className="h-5 w-5" />
                 </div>
-                <h3 className="text-sm font-semibold text-white mb-1">
+                <h3 className="text-sm font-semibold text-surface-100 mb-1">
                   Support
                 </h3>
                 <a
-                  href="mailto:manish.kumar@TubeForge.in"
+                  href="mailto:manish.kumar@modifyly.in"
                   className="text-sm text-accent-400 hover:text-accent-300 transition-colors"
                 >
-                  manish.kumar@TubeForge.in
+                  manish.kumar@modifyly.in
                 </a>
                 <p className="text-xs text-surface-500 mt-2">
                   For bug reports, feature requests, or any other inquiries.
@@ -111,11 +92,11 @@ export default function ContactPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-700 text-surface-300 mb-4">
                   <Clock className="h-5 w-5" />
                 </div>
-                <h3 className="text-sm font-semibold text-white mb-1">
+                <h3 className="text-sm font-semibold text-surface-100 mb-1">
                   Response Time
                 </h3>
                 <p className="text-sm text-surface-400">
-                  Usually within <span className="text-white font-medium">24 hours</span>
+                  Usually within <span className="text-surface-100 font-medium">24 hours</span>
                 </p>
                 <p className="text-xs text-surface-500 mt-2">
                   We reply Monday through Friday.
@@ -131,7 +112,7 @@ export default function ContactPage() {
               className="md:col-span-2"
             >
               <div className="glass rounded-2xl p-6 sm:p-8">
-                <h2 className="text-lg font-semibold text-white mb-6">
+                <h2 className="text-lg font-semibold text-surface-100 mb-6">
                   Send us a message
                 </h2>
 
@@ -146,7 +127,7 @@ export default function ContactPage() {
                         <Send className="h-6 w-6 text-brand-400" />
                       </div>
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-lg font-semibold text-surface-100 mb-2">
                       Message sent!
                     </h3>
                     <p className="text-sm text-surface-400 mb-6 max-w-sm mx-auto">
@@ -187,7 +168,7 @@ export default function ContactPage() {
                             setFormData({ ...formData, name: e.target.value })
                           }
                           placeholder="Your name"
-                          className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
+                          className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
                         />
                       </div>
                       <div>
@@ -206,7 +187,7 @@ export default function ContactPage() {
                             setFormData({ ...formData, email: e.target.value })
                           }
                           placeholder="you@example.com"
-                          className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
+                          className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
                         />
                       </div>
                     </div>
@@ -227,7 +208,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, subject: e.target.value })
                         }
                         placeholder="How can we help?"
-                        className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
                       />
                     </div>
 
@@ -247,7 +228,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, message: e.target.value })
                         }
                         placeholder="Tell us more about your question or issue..."
-                        className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all resize-y"
+                        className="w-full px-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all resize-y"
                       />
                     </div>
 

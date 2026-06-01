@@ -109,7 +109,7 @@ export default function ProgressModal() {
             {(isDone || isError || isCancelled) && (
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 p-1.5 rounded-lg text-surface-500 hover:text-white hover:bg-white/5 transition-colors"
+                className="absolute top-4 right-4 p-1.5 rounded-lg text-surface-500 hover:text-surface-100 hover:bg-white/5 transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -128,7 +128,7 @@ export default function ProgressModal() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold text-white">
+                  <h3 className="text-base font-semibold text-surface-100">
                     {statusConfig.text}
                   </h3>
                   {progress?.filename && (
@@ -164,7 +164,7 @@ export default function ProgressModal() {
                     <Zap className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                     <div className="min-w-0">
                       <p className="text-[10px] text-surface-500 uppercase tracking-wider">Speed</p>
-                      <p className="text-xs font-medium text-white truncate">
+                      <p className="text-xs font-medium text-surface-100 truncate">
                         {progress?.speed || '—'}
                       </p>
                     </div>
@@ -173,7 +173,7 @@ export default function ProgressModal() {
                     <Clock className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                     <div className="min-w-0">
                       <p className="text-[10px] text-surface-500 uppercase tracking-wider">ETA</p>
-                      <p className="text-xs font-medium text-white truncate">
+                      <p className="text-xs font-medium text-surface-100 truncate">
                         {progress?.eta || '—'}
                       </p>
                     </div>
@@ -204,7 +204,7 @@ export default function ProgressModal() {
                     </a>
                     <button
                       onClick={handleCopyLink}
-                      className="px-4 py-2.5 rounded-xl glass text-xs text-surface-300 hover:text-white transition-colors"
+                      className="px-4 py-2.5 rounded-xl glass text-xs text-surface-300 hover:text-surface-100 transition-colors"
                     >
                       Copy Link
                     </button>
@@ -223,7 +223,7 @@ export default function ProgressModal() {
                 {(isError || isCancelled) && (
                   <button
                     onClick={handleClose}
-                    className="w-full px-4 py-2.5 rounded-xl glass text-sm text-surface-300 hover:text-white transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl glass text-sm text-surface-300 hover:text-surface-100 transition-colors"
                   >
                     Close
                   </button>

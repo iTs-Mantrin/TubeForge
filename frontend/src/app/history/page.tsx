@@ -66,7 +66,7 @@ function HistoryCard({
         <div className="flex-1 min-w-0">
           <Link
             href={`/download/${encodeURIComponent(btoa(item.url))}`}
-            className="text-sm font-medium text-white hover:text-brand-300 transition-colors line-clamp-1"
+            className="text-sm font-medium text-surface-100 hover:text-brand-300 transition-colors line-clamp-1"
           >
             {item.title}
           </Link>
@@ -139,7 +139,7 @@ export default function HistoryPage() {
             className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
           >
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-surface-100">
                 Download History
               </h1>
               <p className="text-surface-400 text-sm mt-1">
@@ -172,7 +172,7 @@ export default function HistoryPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search downloads..."
-                className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-800/50 border border-white/5 text-sm text-white placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
+                className="w-full pl-11 pr-4 py-3 rounded-xl bg-surface-800/50 border border-(--border-subtle) text-sm text-surface-100 placeholder-surface-500 outline-none focus:ring-2 focus:ring-brand-500/30 transition-all"
               />
             </motion.div>
           )}
@@ -189,7 +189,7 @@ export default function HistoryPage() {
                   <Clock className="h-6 w-6 text-surface-500" />
                 </div>
               </div>
-              <h2 className="text-lg font-semibold text-white mb-2">
+              <h2 className="text-lg font-semibold text-surface-100 mb-2">
                 No downloads yet
               </h2>
               <p className="text-sm text-surface-400 mb-6 max-w-sm mx-auto">
