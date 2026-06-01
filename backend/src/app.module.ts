@@ -8,6 +8,8 @@ import { QueueModule } from './queue/queue.module';
 import { HealthModule } from './health/health.module';
 import { GatewayModule } from './gateway/gateway.module';
 
+import { HealthController } from './health.controller';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +28,7 @@ import { GatewayModule } from './gateway/gateway.module';
     HealthModule,
     GatewayModule,
   ],
+  controllers: [HealthController],
   providers: [
     {
       provide: APP_GUARD,
