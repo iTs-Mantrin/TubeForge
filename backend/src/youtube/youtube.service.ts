@@ -11,16 +11,51 @@ import { CacheService } from '../services/cache.service';
  */
 const inMemoryStore = new Map<string, any>();
 
+/** Per-IP download rate limit tracking. */
+const ipDownloadMap = new Map<string, number[]>();
+
 @Injectable()
 export class YoutubeService {
   private readonly logger = new Logger(YoutubeService.name);
+  private readonly maxDownloadsPerIp: number;
+  private readonly downloadWindowMs: number;
+  private readonly maxPreviewsPerIp: number;
+  private readonly previewWindowMs: number;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly ytdlpService: YtdlpService,
     private readonly cacheService: CacheService,
     @InjectQueue('youtube-downloads') private readonly downloadQueue: Queue,
-  ) {}
+  ) {
+    this.maxDownloadsPerIp = parseInt(process.env.DOWNLOADS_PER_IP || '2', 10);
+    this.downloadWindowMs = parseInt(process.env.DOWNLOAD_WINDOW_MS || '60000', 10);
+    this.maxPreviewsPerIp = parseInt(process.env.PREVIEWS_PER_IP || '10', 10);
+    this.previewWindowMs = parseInt(process.env.PREVIEW_WINDOW_MS || '60000', 10);
+  }
+
+  /** Check + record a download request from an IP. Returns true if allowed. */
+  checkDownloadRate(ip: string): boolean {
+    return this.checkRate(ip, this.maxDownloadsPerIp, this.downloadWindowMs);
+  }
+
+  /** Check + record a preview request from an IP. Returns true if allowed. */
+  checkPreviewRate(ip: string): boolean {
+    return this.checkRate(ip, this.maxPreviewsPerIp, this.previewWindowMs);
+  }
+
+  private checkRate(ip: string, max: number, windowMs: number): boolean {
+    const now = Date.now();
+    const timestamps = ipDownloadMap.get(ip) || [];
+    const recent = timestamps.filter(t => now - t < windowMs);
+    if (recent.length >= max) return false;
+    recent.push(now);
+    // Prune old entries beyond window
+    const cutoff = now - windowMs;
+    while (recent.length && recent[0] < cutoff) recent.shift();
+    ipDownloadMap.set(ip, recent);
+    return true;
+  }
 
   /** Get video metadata via yt-dlp (async spawn, non-blocking). */
   async preview(url: string): Promise<any> {

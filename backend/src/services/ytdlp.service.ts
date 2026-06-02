@@ -23,7 +23,36 @@ export interface DownloadResult {
 export class YtdlpService {
   private readonly logger = new Logger(YtdlpService.name);
 
-  constructor(private readonly configService: ConfigService) {}
+  /** Semaphore — limits concurrent yt-dlp processes so YouTube doesn't rate-limit the server IP. */
+  private activeDownloads = 0;
+  private maxConcurrent = 10;
+  private pendingQueue: Array<{ resolve: () => void; reject: (err: any) => void }> = [];
+
+  constructor(private readonly configService: ConfigService) {
+    this.maxConcurrent =
+      this.configService.get<number>('ytDlp.maxConcurrentDownloads') || 10;
+  }
+
+  /** Wait until a download slot is available, then acquire it. */
+  private async acquireSlot(): Promise<void> {
+    if (this.activeDownloads < this.maxConcurrent) {
+      this.activeDownloads++;
+      return;
+    }
+    return new Promise<void>((resolve, reject) => {
+      this.pendingQueue.push({ resolve, reject });
+    });
+  }
+
+  /** Release a download slot and hand it to the next waiter (if any). */
+  private releaseSlot(): void {
+    const next = this.pendingQueue.shift();
+    if (next) {
+      next.resolve();
+    } else {
+      this.activeDownloads--;
+    }
+  }
 
   /**
    * Fetch video metadata asynchronously using spawn (non-blocking).
@@ -98,6 +127,9 @@ export class YtdlpService {
     downloadDir: string,
     onProgress?: (progress: DownloadProgress) => void,
   ): Promise<DownloadResult> {
+    // Acquire semaphore slot — waits if too many concurrent downloads
+    await this.acquireSlot();
+
     const prefix = `yt_${taskId}_`;
     fs.mkdirSync(downloadDir, { recursive: true });
 
@@ -105,7 +137,7 @@ export class YtdlpService {
     const args = this.buildDownloadArgs(url, outtmpl, quality, audioOnly);
 
     this.logger.log(
-      `Starting download ${taskId}: yt-dlp ${args.slice(0, 4).join(' ')} …`,
+      `Starting download ${taskId} (active: ${this.activeDownloads}/${this.maxConcurrent}): yt-dlp ${args.slice(0, 4).join(' ')} …`,
     );
 
     return new Promise((resolve, reject) => {
@@ -144,6 +176,7 @@ export class YtdlpService {
       });
 
       proc.on('close', (code) => {
+        this.releaseSlot();
         if (code !== 0) {
           reject(new Error(`yt-dlp exited ${code}: ${stderr}`));
           return;
@@ -159,7 +192,10 @@ export class YtdlpService {
         resolve({ outputPath, title });
       });
 
-      proc.on('error', reject);
+      proc.on('error', (err) => {
+        this.releaseSlot();
+        reject(err);
+      });
     });
   }
 
@@ -209,6 +245,16 @@ export class YtdlpService {
       '--newline',
       '--no-playlist',
       '--geo-bypass',
+      '--concurrent-fragments',
+      `${this.configService.get<number>('ytDlp.concurrentFragments') || 5}`,
+      '--throttled-rate',
+      this.configService.get<string>('ytDlp.throttledRate') || '100K',
+      '--retries',
+      this.configService.get<string>('ytDlp.retries') || 'infinite',
+      '--fragment-retries',
+      this.configService.get<string>('ytDlp.fragmentRetries') || 'infinite',
+      '--limit-rate',
+      this.configService.get<string>('ytDlp.limitRate') || '50M',
       '-o',
       outtmpl,
       '--user-agent',

@@ -42,7 +42,7 @@ async function bootstrap() {
   const REDIS_PORT = configService.get('redis.port') || 6379;
   const REDIS_PASSWORD = configService.get('redis.password') || '';
   const QUEUE_NAME = configService.get('queue.name') || 'youtube-downloads';
-  const CONCURRENCY = configService.get('queue.concurrency') || 3;
+  const CONCURRENCY = configService.get('queue.concurrency') || 10;
   const DOWNLOAD_DIR = configService.get('download.dir') || '/tmp/yt-downloads';
 
   logger.log(
@@ -74,17 +74,32 @@ async function bootstrap() {
         },
       );
 
-      // Upload to R2 using shared upload service
+      // Upload to R2 with retry
       let downloadUrl = '';
-      try {
-        const remoteKey = await uploadService.store(outputPath);
-        downloadUrl = await uploadService.getDownloadUrl(
-          remoteKey,
-          path.basename(outputPath),
-        );
-        fs.unlinkSync(outputPath);
-      } catch (err: any) {
-        logger.warn(`R2 upload failed: ${err.message}`);
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const remoteKey = await uploadService.store(outputPath);
+          downloadUrl = await uploadService.getDownloadUrl(
+            remoteKey,
+            path.basename(outputPath),
+          );
+          // Delete temp file only after confirmed upload
+          try { fs.unlinkSync(outputPath); } catch { /* ignore */ }
+          break;
+        } catch (err: any) {
+          if (attempt < 3) {
+            const delay = Math.min(1000 * 2 ** (attempt - 1), 10000);
+            await new Promise((r) => setTimeout(r, delay));
+            logger.warn(
+              `R2 upload attempt ${attempt} failed, retrying in ${delay}ms: ${err.message}`,
+            );
+          } else {
+            logger.warn(
+              `R2 upload failed after 3 attempts: ${err.message}`,
+            );
+            downloadUrl = '';
+          }
+        }
       }
 
       await job.updateProgress({

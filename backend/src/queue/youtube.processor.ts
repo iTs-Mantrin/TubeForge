@@ -16,7 +16,7 @@ interface DownloadJobData {
 }
 
 @Processor('youtube-downloads', {
-  concurrency: 3,
+  concurrency: parseInt(process.env.QUEUE_CONCURRENCY || '10', 10),
 })
 export class YoutubeProcessor extends WorkerHost {
   private readonly logger = new Logger(YoutubeProcessor.name);
@@ -50,23 +50,32 @@ export class YoutubeProcessor extends WorkerHost {
       },
     );
 
-    // Upload to R2
+    // Upload to R2 with retry
     let downloadUrl = '';
-    try {
-      const remoteKey = await this.uploadService.store(outputPath);
-      downloadUrl = await this.uploadService.getDownloadUrl(
-        remoteKey,
-        path.basename(outputPath),
-      );
-      // Remove local temp file
+    for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        fs.unlinkSync(outputPath);
-      } catch {
-        // ignore
+        const remoteKey = await this.uploadService.store(outputPath);
+        downloadUrl = await this.uploadService.getDownloadUrl(
+          remoteKey,
+          path.basename(outputPath),
+        );
+        // Delete temp file only after confirmed upload
+        try { fs.unlinkSync(outputPath); } catch { /* ignore */ }
+        break;
+      } catch (err: any) {
+        if (attempt < 3) {
+          const delay = Math.min(1000 * 2 ** (attempt - 1), 10000);
+          await new Promise((r) => setTimeout(r, delay));
+          this.logger.warn(
+            `R2 upload attempt ${attempt} failed, retrying in ${delay}ms: ${err.message}`,
+          );
+        } else {
+          this.logger.warn(
+            `R2 upload failed after 3 attempts: ${err.message}`,
+          );
+          downloadUrl = '';
+        }
       }
-    } catch (err: any) {
-      this.logger.warn(`R2 upload failed: ${err.message}`);
-      downloadUrl = '';
     }
 
     // Mark done

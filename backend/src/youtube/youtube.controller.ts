@@ -6,9 +6,11 @@ import {
   Param,
   Body,
   Query,
+  Req,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { YoutubeService } from './youtube.service';
 import {
@@ -28,13 +30,31 @@ export class YoutubeController {
   @ApiOperation({ summary: 'Get video metadata before downloading' })
   async preview(
     @Body() dto: PreviewRequestDto,
+    @Req() req: Request,
   ): Promise<PreviewResponseDto> {
+    const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+    if (!this.youtubeService.checkPreviewRate(ip)) {
+      throw new HttpException(
+        'Too many preview requests. Please wait before trying again.',
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
     return this.youtubeService.preview(dto.url);
   }
 
   @Post('download')
   @ApiOperation({ summary: 'Start a YouTube download job in the queue' })
-  async download(@Body() dto: DownloadRequestDto): Promise<DownloadResponseDto> {
+  async download(
+    @Body() dto: DownloadRequestDto,
+    @Req() req: Request,
+  ): Promise<DownloadResponseDto> {
+    const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+    if (!this.youtubeService.checkDownloadRate(ip)) {
+      throw new HttpException(
+        'Too many download requests. Please wait before starting another download.',
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
     const taskId = uuidv4();
     await this.youtubeService.enqueueDownload(taskId, dto);
     return {
