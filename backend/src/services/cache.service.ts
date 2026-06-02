@@ -22,6 +22,7 @@ export class CacheService {
     this.defaultTtl = 3600; // 1 hour default
 
     try {
+      const useTls = this.configService.get<boolean>('redis.tls');
       this.redis = new Redis({
         host,
         port,
@@ -34,6 +35,7 @@ export class CacheService {
           if (times > 3) return null; // give up
           return Math.min(times * 200, 2000);
         },
+        ...(useTls ? { tls: {} } : {}),
       });
       this.redis.on('error', (err) => {
         this.logger.warn(`Redis cache error: ${err.message}`);

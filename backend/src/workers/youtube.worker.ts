@@ -100,6 +100,7 @@ async function bootstrap() {
         host: REDIS_HOST,
         port: REDIS_PORT,
         password: REDIS_PASSWORD || undefined,
+        ...(configService.get('redis.tls') ? { tls: {} } : {}),
       },
       concurrency: CONCURRENCY,
     },

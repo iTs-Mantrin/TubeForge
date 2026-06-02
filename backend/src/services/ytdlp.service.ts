@@ -231,7 +231,7 @@ export class YtdlpService {
     if (audioOnly) {
       args.push(
         '-f',
-        'bestaudio/best',
+        'ba/b',
         '--extract-audio',
         '--audio-format',
         'mp3',
@@ -241,15 +241,16 @@ export class YtdlpService {
     } else {
       const q = quality.toLowerCase();
       const fmtMap: Record<string, string> = {
-        highest: 'bestvideo+bestaudio/best',
-        '2160p': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]',
-        '1440p': 'bestvideo[height<=1440]+bestaudio/best[height<=1440]',
-        '1080p': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
-        '720p': 'bestvideo[height<=720]+bestaudio/best[height<=720]',
-        '480p': 'bestvideo[height<=480]+bestaudio/best[height<=480]',
-        '360p': 'bestvideo[height<=360]+bestaudio/best[height<=360]',
+        highest: 'bv*+ba/b',
+        '2160p': 'bv*[height<=2160]+ba/b',
+        '1440p': 'bv*[height<=1440]+ba/b',
+        '1080p': 'bv*[height<=1080]+ba/b',
+        '720p': 'bv*[height<=720]+ba/b',
+        '480p': 'bv*[height<=480]+ba/b',
+        '360p': 'bv*[height<=360]+ba/b',
       };
       args.push('-f', fmtMap[q] || quality);
+      args.push('--merge-output-format', 'mp4');
     }
 
     return args;

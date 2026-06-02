@@ -17,6 +17,7 @@ import { CleanupService } from '../services/cleanup.service';
           port: config.get<number>('redis.port'),
           password: config.get<string>('redis.password') || undefined,
           db: config.get<number>('redis.db'),
+          ...(config.get<boolean>('redis.tls') ? { tls: {} } : {}),
         },
         defaultJobOptions: {
           attempts: 3,
