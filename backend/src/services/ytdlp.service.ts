@@ -182,7 +182,7 @@ export class YtdlpService {
       '--skip-download',
       '--no-playlist',
       '--extractor-args',
-      'youtube:player_client=android&player_skip=webpage,configs',
+      'youtube:player_client=android',
       '--geo-bypass',
       '--user-agent',
       this.configService.get<string>('ytDlp.userAgent') ||
@@ -214,7 +214,7 @@ export class YtdlpService {
       '--newline',
       '--no-playlist',
       '--extractor-args',
-      'youtube:player_client=android&player_skip=webpage,configs',
+      'youtube:player_client=android',
       '--geo-bypass',
       '-o',
       outtmpl,
