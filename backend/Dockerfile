@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install build deps (ffmpeg for yt-dlp)
 RUN apk add --no-cache ffmpeg python3 py3-pip && \
-    pip3 install --break-system-packages yt-dlp
+    pip3 install --break-system-packages --upgrade yt-dlp
 
 COPY . .
 RUN npm ci
@@ -20,7 +20,7 @@ WORKDIR /app
 
 # Runtime deps
 RUN apk add --no-cache ffmpeg python3 py3-pip wget && \
-    pip3 install --break-system-packages yt-dlp
+    pip3 install --break-system-packages --upgrade yt-dlp
 
 # Add yt-dlp auto-update cron (runs daily at 3am)
 RUN echo "0 3 * * * yt-dlp -U >> /var/log/ytdlp-update.log 2>&1" > /etc/crontabs/root

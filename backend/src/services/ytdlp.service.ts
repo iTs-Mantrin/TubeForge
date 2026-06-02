@@ -33,7 +33,7 @@ export class YtdlpService {
     return new Promise((resolve, reject) => {
       const args = this.buildPreviewArgs(url);
       const proc = spawn('yt-dlp', args, {
-        timeout: 30_000,
+        timeout: 60_000,
       });
 
       let stdout = '';
@@ -168,11 +168,18 @@ export class YtdlpService {
   /**
    * Build safe args for preview (no shell injection).
    * url is passed as a positional argument, not interpolated.
+   *
+   * Uses Android player client to bypass YouTube's datacenter-IP blocking
+   * (common on Render / Railway / cloud providers).
    */
   private buildPreviewArgs(url: string): string[] {
     const args = [
       '--no-warnings',
       '--dump-single-json',
+      '--skip-download',
+      '--no-playlist',
+      '--extractor-args',
+      'youtube:player_client=android,web&player_skip=webpage',
       '--user-agent',
       this.configService.get<string>('ytDlp.userAgent') ||
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
