@@ -18,6 +18,11 @@ export class PreviewResponseDto {
   @ApiProperty() webpageUrl: string;
   @ApiProperty({ type: [Object], description: 'All available formats (untruncated)' })
   formats: any[];
+  @ApiProperty({
+    type: [String],
+    description: 'Simplified list of available quality labels (e.g. 144p, 360p, 720p)',
+  })
+  qualities: string[];
 }
 
 export class FormatInfo {

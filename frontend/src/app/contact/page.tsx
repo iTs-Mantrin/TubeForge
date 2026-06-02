@@ -40,7 +40,7 @@ export default function ContactPage() {
     <div className="min-h-screen flex flex-col bg-surface-950">
       <Navbar />
       <main className="flex-1 pt-24 pb-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl px-3 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

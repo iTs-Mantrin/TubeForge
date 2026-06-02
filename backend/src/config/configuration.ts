@@ -27,11 +27,12 @@ export default () => ({
     userAgent:
       process.env.YT_DLP_USER_AGENT ||
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-    concurrentFragments: parseInt(process.env.YT_DLP_CONCURRENT_FRAGMENTS || '5', 10),
+    concurrentFragments: parseInt(process.env.YT_DLP_CONCURRENT_FRAGMENTS || '8', 10),
     throttledRate: process.env.YT_DLP_THROTTLED_RATE || '100K',
     limitRate: process.env.YT_DLP_LIMIT_RATE || '50M',
-    retries: process.env.YT_DLP_RETRIES || 'infinite',
-    fragmentRetries: process.env.YT_DLP_FRAGMENT_RETRIES || 'infinite',
+    retries: process.env.YT_DLP_RETRIES || '10',
+    fragmentRetries: process.env.YT_DLP_FRAGMENT_RETRIES || '10',
+    socketTimeout: parseInt(process.env.YT_DLP_SOCKET_TIMEOUT || '30', 10),
     maxConcurrentDownloads: parseInt(process.env.YT_DLP_MAX_CONCURRENT || '10', 10),
   },
 

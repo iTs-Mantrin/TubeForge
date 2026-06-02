@@ -51,12 +51,12 @@ export const APP_DESCRIPTION =
 export const FEATURES = [
   {
     title: 'Any Quality',
-    description: 'From 360p to 4K — pick the resolution that works for you.',
+    description: 'From 144p to 4K — pick the resolution that works for you.',
     icon: 'sparkles',
   },
   {
     title: 'Audio Only',
-    description: 'Extract MP3 audio at 192kbps. Perfect for music & podcasts.',
+    description: 'Extract audio (AAC/MP3) at 192kbps. Perfect for music & podcasts.',
     icon: 'music',
   },
   {
@@ -99,7 +99,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     question: 'What formats are supported?',
     answer:
-      'You can download videos as MP4 and audio as MP3. Choose from multiple quality options including 360p, 480p, 720p, 1080p, 1440p, and 2160p (4K).',
+      'Videos are downloaded as MP4 in any quality from 144p to 4K. Audio is extracted as high-quality AAC (192kbps). Choose from 360p, 480p, 720p, 1080p, 1440p, or 2160p (4K).',
   },
   {
     question: 'How long does a download take?',
@@ -119,7 +119,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     question: 'How do I download audio only?',
     answer:
-      'Select the "Audio" tab when viewing video details and choose MP3 quality. The audio will be extracted at 192kbps.',
+      'Select the "Audio" tab when viewing video details. The audio will be extracted as high-quality AAC at 192kbps.',
   },
   {
     question: 'Where are my downloads stored?',

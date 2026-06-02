@@ -75,7 +75,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
       <form onSubmit={handleSubmit} className="relative">
         <div
           className={cn(
-            'relative flex items-center gap-3 w-full px-5 py-4 rounded-2xl transition-all duration-300',
+            'relative flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-5 py-3 sm:py-4 rounded-2xl transition-all duration-300',
             'glass',
             isFocused && 'ring-2 ring-brand-500/50 shadow-lg shadow-brand-500/10',
             isValid === false && 'ring-2 ring-red-500/50',
@@ -124,7 +124,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
               <button
                 type="button"
                 onClick={handlePaste}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-brand-300 hover:text-surface-100 hover:bg-brand-500/10 transition-colors"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-brand-300 hover:text-surface-100 hover:bg-brand-500/10 transition-colors"
               >
                 <LinkIcon className="h-3.5 w-3.5" />
                 Paste
@@ -137,7 +137,7 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={cn(
-                'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200',
+                'flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200',
                 isValidYouTubeUrl(url)
                   ? 'bg-gradient-to-r from-brand-600 to-accent-600 text-white shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40'
                   : 'bg-surface-800 text-surface-400 cursor-not-allowed'
@@ -146,12 +146,12 @@ export default function SearchBar({ onSearch, isLoading, autoFocus }: SearchBarP
               {isLoading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Fetching...
+                  <span className="hidden sm:inline">Fetching...</span>
                 </>
               ) : (
                 <>
                   <Search className="h-4 w-4" />
-                  Search
+                  <span className="hidden sm:inline">Search</span>
                 </>
               )}
             </motion.button>

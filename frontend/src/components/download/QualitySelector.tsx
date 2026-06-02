@@ -62,7 +62,7 @@ export default function QualitySelector({
           )}
         >
           <Music className="h-4 w-4" />
-          Audio (MP3)
+          Audio (AAC)
         </button>
       </div>
 
@@ -72,7 +72,7 @@ export default function QualitySelector({
           <label className="text-xs font-medium text-surface-400 uppercase tracking-wider">
             Quality
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {availableQualities.map((quality) => {
               const isSelected = selectedQuality === quality.value;
               const fmt = formats?.find((f) => f.height === quality.height);
@@ -112,7 +112,7 @@ export default function QualitySelector({
           </label>
           <div className="flex gap-2">
             {[
-              { label: 'MP3 192kbps', value: 'mp3', desc: 'High quality' },
+              { label: 'AAC 192kbps', value: 'aac', desc: 'High quality' },
             ].map((opt) => (
               <div
                 key={opt.value}

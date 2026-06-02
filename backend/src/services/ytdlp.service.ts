@@ -94,6 +94,21 @@ export class YtdlpService {
             acodec: f.acodec,
             tbr: f.tbr,
           }));
+
+          // Derive simplified list of available quality labels
+          const seen = new Set<number>();
+          const qualities: string[] = [];
+          const qualityOrder = [144, 240, 360, 480, 720, 1080, 1440, 2160];
+          for (const f of info.formats || []) {
+            if (f.height && f.vcodec !== 'none' && !seen.has(f.height)) {
+              seen.add(f.height);
+            }
+          }
+          for (const h of qualityOrder) {
+            if (seen.has(h)) qualities.push(`${h}p`);
+          }
+          if (qualities.length === 0) qualities.push('highest');
+
           resolve({
             title: info.title || 'Unknown',
             duration: info.duration || 0,
@@ -101,6 +116,7 @@ export class YtdlpService {
             thumbnail: info.thumbnail || '',
             webpageUrl: info.webpage_url || url,
             formats,
+            qualities,
           });
         } catch (e: any) {
           reject(new Error(`Failed to parse yt-dlp output: ${e.message}`));
@@ -214,6 +230,7 @@ export class YtdlpService {
       '--js-runtimes',
       'node',
       '--dump-single-json',
+      '--skip-download',
       '--no-playlist',
     ];
 
@@ -229,6 +246,11 @@ export class YtdlpService {
 
   /**
    * Build yt-dlp arguments for download.
+   *
+   * Format strategy tiered to guarantee MP4+AAC output:
+   * 1. Prefer best MP4 video + M4A audio (native no-transcode path)
+   * 2. Fallback to best video + best audio (ffmpeg recode may trigger)
+   * 3. Fallback to best single file
    */
   private buildDownloadArgs(
     url: string,
@@ -246,13 +268,15 @@ export class YtdlpService {
       '--no-playlist',
       '--geo-bypass',
       '--concurrent-fragments',
-      `${this.configService.get<number>('ytDlp.concurrentFragments') || 5}`,
+      `${this.configService.get<number>('ytDlp.concurrentFragments') || 8}`,
       '--throttled-rate',
       this.configService.get<string>('ytDlp.throttledRate') || '100K',
       '--retries',
-      this.configService.get<string>('ytDlp.retries') || 'infinite',
+      this.configService.get<string>('ytDlp.retries') || '10',
       '--fragment-retries',
-      this.configService.get<string>('ytDlp.fragmentRetries') || 'infinite',
+      this.configService.get<string>('ytDlp.fragmentRetries') || '10',
+      '--socket-timeout',
+      `${this.configService.get<number>('ytDlp.socketTimeout') || 30}`,
       '--limit-rate',
       this.configService.get<string>('ytDlp.limitRate') || '50M',
       '-o',
@@ -270,26 +294,31 @@ export class YtdlpService {
     if (audioOnly) {
       args.push(
         '-f',
-        'ba/b',
+        'ba[ext=m4a]/ba/b',
         '--extract-audio',
         '--audio-format',
-        'mp3',
+        'aac',
         '--audio-quality',
         '192k',
       );
     } else {
       const q = quality.toLowerCase();
-      const fmtMap: Record<string, string> = {
-        highest: 'bv*+ba/b',
-        '2160p': 'bv*[height<=2160]+ba/b',
-        '1440p': 'bv*[height<=1440]+ba/b',
-        '1080p': 'bv*[height<=1080]+ba/b',
-        '720p': 'bv*[height<=720]+ba/b',
-        '480p': 'bv*[height<=480]+ba/b',
-        '360p': 'bv*[height<=360]+ba/b',
-      };
-      args.push('-f', fmtMap[q] || quality);
+      let formatSelector: string;
+
+      if (q === 'highest') {
+        formatSelector = 'bv*[ext=mp4]+ba[ext=m4a]/bv*+ba/b';
+      } else {
+        const heightMatch = q.match(/^(\d+)p$/);
+        const height = heightMatch ? heightMatch[1] : '1080';
+        formatSelector =
+          `bv*[height<=${height}][ext=mp4]+ba[ext=m4a]/` +
+          `bestvideo[height<=${height}]+bestaudio/` +
+          `best`;
+      }
+
+      args.push('-f', formatSelector);
       args.push('--merge-output-format', 'mp4');
+      args.push('--recode-video', 'mp4');
     }
 
     return args;

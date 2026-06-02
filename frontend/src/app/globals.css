@@ -129,7 +129,12 @@
     scroll-behavior: smooth;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
+    overflow-x: hidden;
     background-color: var(--color-surface-950);
     color: var(--color-surface-100);
     font-family: var(--font-sans);

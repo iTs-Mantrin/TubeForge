@@ -48,11 +48,11 @@ export default function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/5 rounded-full blur-3xl" />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {/* Gradient orbs — responsive sizes to prevent horizontal overflow on mobile */}
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-brand-500/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 sm:w-60 sm:h-60 lg:w-80 lg:h-80 bg-accent-500/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-[400px] sm:h-[400px] lg:w-[600px] lg:h-[600px] bg-brand-600/5 rounded-full blur-3xl" />
 
         {/* Grid overlay */}
         <div
@@ -83,7 +83,7 @@ export default function Hero() {
           {/* Heading */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
+            className="text-[clamp(1.75rem,6vw,4.5rem)] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
           >
             <span className="text-surface-100">Download <span className="text-red-500">YouTube</span></span>
             <br />
@@ -106,16 +106,16 @@ export default function Hero() {
           {/* Trust badges */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center gap-6 pt-8 text-xs text-surface-500"
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-8 text-xs text-surface-500"
           >
-            <span className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5" /> No sign-up required
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
+              <Shield className="h-3.5 w-3.5 flex-shrink-0" /> No sign-up required
             </span>
-            <span className="flex items-center gap-1.5">
-              <Zap className="h-3.5 w-3.5" /> Unlimited downloads
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
+              <Zap className="h-3.5 w-3.5 flex-shrink-0" /> Unlimited downloads
             </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-surface-600">4K · 1080p · 720p · MP3</span>
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
+              <span className="text-surface-600">4K · 1080p · 720p · AAC</span>
             </span>
           </motion.div>
 

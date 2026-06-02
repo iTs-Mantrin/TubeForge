@@ -57,10 +57,33 @@ export class YoutubeService {
     return true;
   }
 
+  /**
+   * Normalize YouTube URLs to standard watch format.
+   * Handles: shorts/xxx, youtu.be/xxx, m.youtube.com, music.youtube.com
+   */
+  private normalizeUrl(url: string): string {
+    // youtu.be/XXXXX → youtube.com/watch?v=XXXXX
+    const youtuBeMatch = url.match(/^https?:\/\/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (youtuBeMatch) {
+      return `https://www.youtube.com/watch?v=${youtuBeMatch[1]}`;
+    }
+
+    // youtube.com/shorts/XXXXX → youtube.com/watch?v=XXXXX
+    const shortsMatch = url.match(
+      /^https?:\/\/(www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
+    );
+    if (shortsMatch) {
+      return `https://www.youtube.com/watch?v=${shortsMatch[2]}`;
+    }
+
+    return url; // Already standard format
+  }
+
   /** Get video metadata via yt-dlp (async spawn, non-blocking). */
   async preview(url: string): Promise<any> {
+    const normalizedUrl = this.normalizeUrl(url);
     // Check cache first
-    const cacheKey = this.cacheService.metadataKey(url);
+    const cacheKey = this.cacheService.metadataKey(normalizedUrl);
     const cached = await this.cacheService.get<any>(cacheKey);
     if (cached) {
       this.logger.debug(`Cache hit for preview: ${url}`);
@@ -68,7 +91,7 @@ export class YoutubeService {
     }
 
     try {
-      const info = await this.ytdlpService.preview(url);
+      const info = await this.ytdlpService.preview(normalizedUrl);
       // Cache metadata for 1 hour
       await this.cacheService.set(cacheKey, info, 3600);
       return info;
@@ -93,11 +116,13 @@ export class YoutubeService {
       errorMsg: '',
     });
 
+    const normalizedUrl = this.normalizeUrl(dto.url);
+
     await this.downloadQueue.add(
       'download',
       {
         taskId,
-        url: dto.url,
+        url: normalizedUrl,
         quality: dto.quality || 'highest',
         audioOnly: dto.audioOnly || false,
         downloadDir:

@@ -101,7 +101,7 @@ export default function DownloadPage() {
     <div className="min-h-screen flex flex-col bg-surface-950">
       <Navbar />
       <main className="flex-1 pt-24 pb-16">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-3 sm:px-6 lg:px-8">
           {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -10 }}

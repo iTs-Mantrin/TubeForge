@@ -9,6 +9,11 @@ const sora = Sora({
   display: "swap",
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: {
     default: "TubeForge — Download YouTube Videos Instantly",
