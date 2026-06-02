@@ -169,32 +169,20 @@ export class YtdlpService {
    * Build safe args for preview (no shell injection).
    * url is passed as a positional argument, not interpolated.
    *
-   * Uses multiple strategies to bypass YouTube's datacenter-IP blocking
-   * (common on Render / Railway / cloud providers):
-   * - Android player client (less aggressively blocked than web)
-   * - --geo-bypass for geographical restrictions
-   * - Cookie-based auth when cookies.txt is available
+   * Uses --dump-single-json only — no format selection, no extractor args.
+   * Format selection is irrelevant for metadata-only previews and can fail
+   * when the requested format isn't available for a given video.
    */
   private buildPreviewArgs(url: string): string[] {
-    const args = [
-      '--no-warnings',
-      '--dump-single-json',
-      '--skip-download',
-      '--no-playlist',
-      '--extractor-args',
-      'youtube:player_client=android',
-      '--geo-bypass',
-      '--user-agent',
-      this.configService.get<string>('ytDlp.userAgent') ||
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-    ];
+    const args = ['--dump-single-json', '--no-playlist'];
 
-    const cookiesFile = this.configService.get<string>('ytDlp.cookiesFile');
+    const cookiesFile =
+      this.configService.get<string>('ytDlp.cookiesFile');
     if (cookiesFile && fs.existsSync(cookiesFile)) {
       args.push('--cookies', cookiesFile);
     }
 
-    args.push(url); // <-- safe: never concatenated into string
+    args.push(url);
     return args;
   }
 
