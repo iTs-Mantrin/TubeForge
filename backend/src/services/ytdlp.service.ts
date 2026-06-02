@@ -174,7 +174,12 @@ export class YtdlpService {
    * when the requested format isn't available for a given video.
    */
   private buildPreviewArgs(url: string): string[] {
-    const args = ['--dump-single-json', '--no-playlist'];
+    const args = [
+      '--dump-single-json',
+      '--no-playlist',
+      '--extractor-args',
+      'youtube:player_client=web,android',
+    ];
 
     const cookiesFile =
       this.configService.get<string>('ytDlp.cookiesFile');
@@ -202,7 +207,7 @@ export class YtdlpService {
       '--newline',
       '--no-playlist',
       '--extractor-args',
-      'youtube:player_client=android',
+      'youtube:player_client=web,android',
       '--geo-bypass',
       '-o',
       outtmpl,
