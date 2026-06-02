@@ -175,10 +175,10 @@ export class YtdlpService {
    */
   private buildPreviewArgs(url: string): string[] {
     const args = [
+      '--remote-components',
+      'ejs:github',
       '--dump-single-json',
       '--no-playlist',
-      '--extractor-args',
-      'youtube:player_client=web,android',
     ];
 
     const cookiesFile =
@@ -202,12 +202,12 @@ export class YtdlpService {
   ): string[] {
     const args: string[] = [
       url,
+      '--remote-components',
+      'ejs:github',
       '--no-warnings',
       '--progress',
       '--newline',
       '--no-playlist',
-      '--extractor-args',
-      'youtube:player_client=web,android',
       '--geo-bypass',
       '-o',
       outtmpl,

@@ -4,8 +4,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install build deps (ffmpeg for yt-dlp)
-RUN apk add --no-cache ffmpeg python3 py3-pip && \
-    pip3 install --break-system-packages --upgrade yt-dlp
+RUN apk add --no-cache ffmpeg python3 py3-pip nodejs npm && \
+    pip3 install --break-system-packages -U "yt-dlp[default]"
 
 COPY . .
 RUN npm ci
@@ -19,8 +19,8 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 # Runtime deps
-RUN apk add --no-cache ffmpeg python3 py3-pip wget && \
-    pip3 install --break-system-packages --upgrade yt-dlp
+RUN apk add --no-cache ffmpeg python3 py3-pip nodejs npm wget && \
+    pip3 install --break-system-packages -U "yt-dlp[default]"
 
 # Add yt-dlp auto-update cron (runs daily at 3am)
 RUN echo "0 3 * * * yt-dlp -U >> /var/log/ytdlp-update.log 2>&1" > /etc/crontabs/root
