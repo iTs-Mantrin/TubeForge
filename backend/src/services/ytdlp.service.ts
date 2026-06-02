@@ -177,6 +177,8 @@ export class YtdlpService {
     const args = [
       '--remote-components',
       'ejs:github',
+      '--js-runtimes',
+      'node',
       '--dump-single-json',
       '--no-playlist',
     ];
@@ -204,6 +206,8 @@ export class YtdlpService {
       url,
       '--remote-components',
       'ejs:github',
+      '--js-runtimes',
+      'node',
       '--no-warnings',
       '--progress',
       '--newline',
