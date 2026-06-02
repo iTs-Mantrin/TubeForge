@@ -1,6 +1,7 @@
 import {
   WebSocketGateway,
   WebSocketServer,
+  SubscribeMessage,
   OnGatewayConnection,
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
@@ -45,9 +46,21 @@ export class ProgressGateway
    * Client subscribes to progress updates for a specific task.
    * Call from client: socket.emit('subscribe', { taskId: 'xxx' })
    */
+  @SubscribeMessage('subscribe')
   handleSubscribe(client: Socket, payload: { taskId: string }): void {
     if (payload?.taskId) {
       client.join(`task:${payload.taskId}`);
+    }
+  }
+
+  /**
+   * Client unsubscribes from progress updates.
+   * Call from client: socket.emit('unsubscribe', { taskId: 'xxx' })
+   */
+  @SubscribeMessage('unsubscribe')
+  handleUnsubscribe(client: Socket, payload: { taskId: string }): void {
+    if (payload?.taskId) {
+      client.leave(`task:${payload.taskId}`);
     }
   }
 

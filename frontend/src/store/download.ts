@@ -9,7 +9,7 @@ import type {
   QualityOption,
   DownloadType,
 } from '@/types';
-import { getVideoInfo, startDownload, getProgress, getDownloadResult } from '@/services/api';
+import { getVideoInfo, startDownload, getProgress, getDownloadResult, cancelDownload as cancelDownloadApi } from '@/services/api';
 import { subscribeToProgress } from '@/services/websocket';
 
 interface DownloadState {
@@ -182,7 +182,15 @@ export const useDownloadStore = create<DownloadState>((set, get) => ({
     }
   },
 
-  cancelDownload: () => {
+  cancelDownload: async () => {
+    const { activeJob } = get();
+    if (activeJob?.taskId) {
+      try {
+        await cancelDownloadApi(activeJob.taskId);
+      } catch {
+        // API call is best-effort — always reset local state
+      }
+    }
     set({
       activeJob: null,
       progress: null,
