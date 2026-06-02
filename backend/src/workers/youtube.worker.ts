@@ -21,6 +21,15 @@ import { YtdlpService } from '../services/ytdlp.service';
 import { UploadService } from '../services/upload.service';
 
 async function bootstrap() {
+  // ── Write YOUTUBE_COOKIES env var to temp file for yt-dlp ──
+  const COOKIES_PATH = '/tmp/youtube-cookies.txt';
+  const youtubeCookies = process.env.YOUTUBE_COOKIES;
+  if (youtubeCookies) {
+    fs.writeFileSync(COOKIES_PATH, youtubeCookies, 'utf-8');
+    process.env.YT_DLP_COOKIES_FILE = COOKIES_PATH;
+    console.log(`[YoutubeWorker] YOUTUBE_COOKIES found — wrote ${COOKIES_PATH} (${youtubeCookies.length} chars)`);
+  }
+
   // ── Create NestJS standalone app ─────────────────────────
   const app = await NestFactory.createApplicationContext(AppModule);
   const logger = new Logger('YoutubeWorker');

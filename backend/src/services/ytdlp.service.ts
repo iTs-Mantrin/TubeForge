@@ -169,8 +169,11 @@ export class YtdlpService {
    * Build safe args for preview (no shell injection).
    * url is passed as a positional argument, not interpolated.
    *
-   * Uses Android player client to bypass YouTube's datacenter-IP blocking
-   * (common on Render / Railway / cloud providers).
+   * Uses multiple strategies to bypass YouTube's datacenter-IP blocking
+   * (common on Render / Railway / cloud providers):
+   * - Android player client (less aggressively blocked than web)
+   * - --geo-bypass for geographical restrictions
+   * - Cookie-based auth when cookies.txt is available
    */
   private buildPreviewArgs(url: string): string[] {
     const args = [
@@ -179,7 +182,8 @@ export class YtdlpService {
       '--skip-download',
       '--no-playlist',
       '--extractor-args',
-      'youtube:player_client=android,web&player_skip=webpage',
+      'youtube:player_client=android&player_skip=webpage,configs',
+      '--geo-bypass',
       '--user-agent',
       this.configService.get<string>('ytDlp.userAgent') ||
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -208,6 +212,10 @@ export class YtdlpService {
       '--no-warnings',
       '--progress',
       '--newline',
+      '--no-playlist',
+      '--extractor-args',
+      'youtube:player_client=android&player_skip=webpage,configs',
+      '--geo-bypass',
       '-o',
       outtmpl,
       '--user-agent',

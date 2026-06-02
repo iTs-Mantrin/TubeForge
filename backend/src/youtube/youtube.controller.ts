@@ -29,14 +29,7 @@ export class YoutubeController {
   async preview(
     @Body() dto: PreviewRequestDto,
   ): Promise<PreviewResponseDto> {
-    const info = await this.youtubeService.preview(dto.url);
-    if (!info) {
-      throw new HttpException(
-        'Could not fetch video info',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-    return info;
+    return this.youtubeService.preview(dto.url);
   }
 
   @Post('download')

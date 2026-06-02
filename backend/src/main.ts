@@ -3,12 +3,22 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { HttpExceptionFilter } from './common/filters/http-exception-filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { CleanupService } from './services/cleanup.service';
 import { PinoLogger } from './common/utils/pino-logger';
+import * as fs from 'fs';
 
 async function bootstrap() {
+  // ── Write YOUTUBE_COOKIES env var to temp file for yt-dlp ──
+  const COOKIES_PATH = '/tmp/youtube-cookies.txt';
+  const youtubeCookies = process.env.YOUTUBE_COOKIES;
+  if (youtubeCookies) {
+    fs.writeFileSync(COOKIES_PATH, youtubeCookies, 'utf-8');
+    process.env.YT_DLP_COOKIES_FILE = COOKIES_PATH;
+    console.log(`[Bootstrap] YOUTUBE_COOKIES found — wrote ${COOKIES_PATH} (${youtubeCookies.length} chars)`);
+  }
+
   const app = await NestFactory.create(AppModule, {
     logger: new PinoLogger(),
   });

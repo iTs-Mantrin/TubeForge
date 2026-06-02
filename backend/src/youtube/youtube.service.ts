@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
@@ -23,7 +23,7 @@ export class YoutubeService {
   ) {}
 
   /** Get video metadata via yt-dlp (async spawn, non-blocking). */
-  async preview(url: string): Promise<any | null> {
+  async preview(url: string): Promise<any> {
     // Check cache first
     const cacheKey = this.cacheService.metadataKey(url);
     const cached = await this.cacheService.get<any>(cacheKey);
@@ -39,7 +39,10 @@ export class YoutubeService {
       return info;
     } catch (err: any) {
       this.logger.error(`Preview failed for ${url}: ${err.message}`);
-      return null;
+      throw new HttpException(
+        `Could not fetch video info: ${err.message}`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
