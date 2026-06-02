@@ -1,10 +1,11 @@
 # ---- Build Stage ----
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
 # Install build deps (ffmpeg for yt-dlp)
-RUN apk add --no-cache ffmpeg python3 py3-pip nodejs npm && \
+# nodejs/npm from base image; yt-dlp[default] includes yt-dlp-ejs
+RUN apk add --no-cache ffmpeg python3 py3-pip && \
     pip3 install --break-system-packages -U "yt-dlp[default]"
 
 COPY . .
@@ -14,12 +15,12 @@ COPY src/ ./src/
 RUN npm run build
 
 # ---- Production Stage ----
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 
 WORKDIR /app
 
-# Runtime deps
-RUN apk add --no-cache ffmpeg python3 py3-pip nodejs npm wget && \
+# Runtime deps (nodejs/npm from base image)
+RUN apk add --no-cache ffmpeg python3 py3-pip wget && \
     pip3 install --break-system-packages -U "yt-dlp[default]"
 
 # Add yt-dlp auto-update cron (runs daily at 3am)

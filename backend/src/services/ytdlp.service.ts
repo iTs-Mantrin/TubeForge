@@ -175,8 +175,6 @@ export class YtdlpService {
    */
   private buildPreviewArgs(url: string): string[] {
     const args = [
-      '--remote-components',
-      'ejs:github',
       '--js-runtimes',
       'node',
       '--dump-single-json',
@@ -204,8 +202,6 @@ export class YtdlpService {
   ): string[] {
     const args: string[] = [
       url,
-      '--remote-components',
-      'ejs:github',
       '--js-runtimes',
       'node',
       '--no-warnings',
